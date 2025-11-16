@@ -1,5 +1,6 @@
 import ast
 import logging
+import re
 import traceback
 from collections import defaultdict
 from typing import Any, Callable, Generator, List, Union
@@ -17,6 +18,7 @@ from ...schemas.df_config import Config
 from ..base_logic_unit import BaseLogicUnit
 from ..pipeline_context import PipelineContext
 from .code_cleaning import CodeExecutionContext
+from pandasai.helpers import logger
 
 
 class CodeExecution(BaseLogicUnit):
@@ -52,6 +54,31 @@ class CodeExecution(BaseLogicUnit):
         self.on_failure = on_failure
         self.on_retry = on_retry
 
+    def ensure_required_imports(self, generated_code: str) -> str:
+        updated_code = generated_code.strip()
+        required_imports = [
+            "import pandas as pd",
+            "import numpy as np",
+            "import json",
+            "import regex",
+            "import collections",
+            "from rapidfuzz import fuzz",
+            "from rapidfuzz import process"
+            "import rapidfuzz",
+        ]
+
+        for imp in required_imports:
+            # Extract first module name
+            module = imp.split()[1]
+
+            # Pattern handles both 'import module' and 'from module import ...'
+            pattern = rf"^\s*(import|from)\s+{module}\b"
+
+            if not re.search(pattern, updated_code, flags=re.MULTILINE):
+                updated_code = imp + "\n" + updated_code
+
+        return updated_code
+    
     def execute(self, input: Any, **kwargs) -> Any:
         """
         This method will return output according to
@@ -82,6 +109,9 @@ class CodeExecution(BaseLogicUnit):
         result = None
         while retry_count <= self.context.config.max_retries:
             try:
+                code_to_run = self.ensure_required_imports(code_to_run)
+                logger.info(f"----Code to run {code_to_run}");
+                
                 result = self.execute_code(code_to_run, code_context)
                 if self.context.get("output_type") != "" and (
                     output_helper := self.context.get("output_type")
@@ -167,6 +197,11 @@ class CodeExecution(BaseLogicUnit):
                 skill = context.skills_manager.get_skill_by_func_name(skill_func_name)
                 environment[skill_func_name] = skill
 
+        logger.info("=======environment")
+        # logger.info(environment)
+        environment.update({"__builtins__": __builtins__})
+        
+        
         # Execute the code
         exec(code, environment)
 
