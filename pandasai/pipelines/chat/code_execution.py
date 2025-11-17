@@ -18,7 +18,6 @@ from ...schemas.df_config import Config
 from ..base_logic_unit import BaseLogicUnit
 from ..pipeline_context import PipelineContext
 from .code_cleaning import CodeExecutionContext
-from pandasai.helpers import logger
 
 
 class CodeExecution(BaseLogicUnit):
@@ -110,7 +109,7 @@ class CodeExecution(BaseLogicUnit):
         while retry_count <= self.context.config.max_retries:
             try:
                 code_to_run = self.ensure_required_imports(code_to_run)
-                logger.info(f"----Code to run {code_to_run}");
+                self.logger.info(f"----Code to run {code_to_run}");
                 
                 result = self.execute_code(code_to_run, code_context)
                 if self.context.get("output_type") != "" and (
@@ -197,7 +196,7 @@ class CodeExecution(BaseLogicUnit):
                 skill = context.skills_manager.get_skill_by_func_name(skill_func_name)
                 environment[skill_func_name] = skill
 
-        logger.info("=======environment")
+        self.logger.info("=======environment")
         # logger.info(environment)
         environment.update({"__builtins__": __builtins__})
         
