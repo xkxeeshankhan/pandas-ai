@@ -62,7 +62,7 @@ class CodeExecution(BaseLogicUnit):
             "import regex",
             "import collections",
             "from rapidfuzz import fuzz",
-            "from rapidfuzz import process"
+            "from rapidfuzz import process",
             "import rapidfuzz",
         ]
 
