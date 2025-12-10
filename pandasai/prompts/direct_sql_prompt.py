@@ -41,10 +41,10 @@ class DirectSQLPrompt(GeneratePythonCodePrompt):
         super(DirectSQLPrompt, self).setup(**kwargs)
 
         self.set_var("current_code", kwargs.pop("current_code", CurrentCodePrompt()))
-        self.set_var(
-            "code_description",
-            kwargs.pop("code_description", "Update this initial code:"),
-        )
+        # self.set_var(
+        #     "code_description",
+        #     kwargs.pop("code_description", "Update this initial code:"),
+        # )
         self.set_var("last_message", kwargs.pop("last_message", ""))
         self.set_var("prev_conversation", kwargs.pop("prev_conversation", ""))
 
