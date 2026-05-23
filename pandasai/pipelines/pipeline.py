@@ -84,7 +84,7 @@ class Pipeline(AbstractPipeline):
             Any: Depends on the type can return anything
         """
         try:
-            self._logger.log(f"{logic.__class__.__name__} {len(self._steps)}")
+            self._logger.log(f"Pipeline Step Count: {len(self._steps)}")
             for index, logic in enumerate(self._steps):
                 # Callback function before execution
                 if logic.before_execution is not None:
