@@ -168,7 +168,7 @@ class GenerateChatPipeline:
             - 'type': The type of the output.
             - 'value': The value of the output.
         """
-        self._logger.log(f"Executing Pipeline: {self.__class__.__name__}")
+        self._logger.log(f"Executing Pipeline: run_generate_code {self.__class__.__name__}")
 
         # Reset intermediate values
         self.context.reset_intermediate_values()
@@ -225,7 +225,7 @@ class GenerateChatPipeline:
             - 'type': The type of the output.
             - 'value': The value of the output.
         """
-        self._logger.log(f"Executing Pipeline: {self.__class__.__name__}")
+        self._logger.log(f"Executing Pipeline: run_execute_code {self.__class__.__name__}")
 
         # Reset intermediate values
         self.context.reset_intermediate_values()
@@ -282,7 +282,7 @@ class GenerateChatPipeline:
             - 'type': The type of the output.
             - 'value': The value of the output.
         """
-        self._logger.log(f"Executing Pipeline: {self.__class__.__name__}")
+        self._logger.log(f"Executing Pipeline: run {self.__class__.__name__}")
 
         # Reset intermediate values
         self.context.reset_intermediate_values()
