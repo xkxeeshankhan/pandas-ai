@@ -237,7 +237,7 @@ class BaseAgent:
             )
 
         try:
-            self.logger.log(f"Question: {query}")
+            self.logger.log(f"Question:")
             self.logger.log(
                 f"Running PandasAI with {self.context.config.llm.type} LLM..."
             )
@@ -266,7 +266,7 @@ class BaseAgent:
                 "because of the following error: No pipeline exists"
             )
         try:
-            self.logger.log(f"Question: {query}")
+            self.logger.log(f"Question:")
             self.logger.log(
                 f"Running PandasAI with {self.context.config.llm.type} LLM..."
             )

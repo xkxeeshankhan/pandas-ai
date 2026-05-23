@@ -36,7 +36,7 @@ class SemanticPromptGeneration(BaseLogicUnit):
         prompt = SemanticAgentPrompt(
             context=self.context, schema=json.dumps(self.context.get("df_schema"))
         )
-        self.logger.log(f"Using prompt: {prompt}")
+        self.logger.log(f"Using prompt:")
 
         return LogicUnitOutput(
             prompt,

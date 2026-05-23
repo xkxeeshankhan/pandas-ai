@@ -33,11 +33,11 @@ class CodeGenerator(BaseLogicUnit):
         code = pipeline_context.config.llm.generate_code(input, pipeline_context)
 
         pipeline_context.add("last_code_generated", code)
-        logger.log(
-            f"""Prompt used:
-            {pipeline_context.config.llm.last_prompt}
-            """
-        )
+        # logger.log(
+        #     f"""Prompt used:
+        #     {pipeline_context.config.llm.last_prompt}
+        #     """
+        # )
         logger.log(
             f"""Code generated:
             ```

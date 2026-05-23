@@ -34,7 +34,7 @@ class PromptGeneration(BaseLogicUnit):
         self.logger: Logger = kwargs.get("logger")
 
         prompt = self.get_chat_prompt(self.context)
-        self.logger.log(f"Using prompt: {prompt}")
+        self.logger.log(f"Using prompt:")
 
         return LogicUnitOutput(
             prompt,
