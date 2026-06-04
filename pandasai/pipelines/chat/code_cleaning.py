@@ -146,6 +146,7 @@ class CodeCleaning(BaseLogicUnit):
 
         # Get the code to run removing unsafe imports and df overwrites
         code_to_run = self._clean_code(code, context)
+        # code_to_run = code
         self._logger.log(
             f"""
 Code running:
@@ -455,9 +456,10 @@ Code running:
         self._function_call_visitor.visit(tree)
 
         for node in tree.body:
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
-                self._check_imports(node)
-                continue
+            # XK: Removed
+            # if isinstance(node, (ast.Import, ast.ImportFrom)):
+            #     self._check_imports(node)
+            #     continue
 
             if (
                 self._is_df_overwrite(node)
@@ -536,7 +538,14 @@ Code running:
 
         if library == "pandas":
             return
-
+        
+        self._logger.log(
+            f"""
+custom_whitelisted_dependencies:
+```
+{self._config.custom_whitelisted_dependencies}
+        ```"""
+        )
         if (
             library
             in WHITELISTED_LIBRARIES + self._config.custom_whitelisted_dependencies

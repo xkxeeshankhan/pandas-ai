@@ -49,5 +49,5 @@ class ErrorCorrectionPipeline:
         self._logger = logger
 
     def run(self, input: ErrorCorrectionPipelineInput):
-        self._logger.log(f"Executing Pipeline: {self.__class__.__name__}")
+        self._logger.log(f"Executing Pipeline: Agent {self.__class__.__name__}")
         return self.pipeline.run(input)

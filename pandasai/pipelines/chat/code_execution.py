@@ -108,8 +108,8 @@ class CodeExecution(BaseLogicUnit):
         result = None
         while retry_count <= self.context.config.max_retries:
             try:
+                self.logger.log(f"----Code to run: ensure_imports:\n{code_to_run}");
                 code_to_run = self.ensure_required_imports(code_to_run)
-                self.logger.log(f"----Code to run {code_to_run}");
                 
                 result = self.execute_code(code_to_run, code_context)
                 if self.context.get("output_type") != "" and (
